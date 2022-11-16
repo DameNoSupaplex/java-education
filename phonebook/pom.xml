@@ -11,13 +11,6 @@
 
     <artifactId>phonebook</artifactId>
 
-    <repositories>
-        <repository>
-            <id>jcenter</id>
-            <url>https://jcenter.bintray.com</url>
-        </repository>
-    </repositories>
-
     <build>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
@@ -43,9 +36,17 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <!-- cannot access class com.sun.javafx.application.ParametersImpl (in module javafx.graphics) because module javafx.graphics does not export com.sun.javafx.application to unnamed module-->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M7</version>
+                <configuration>
+                    <argLine>--add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED</argLine>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
     <dependencies>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
